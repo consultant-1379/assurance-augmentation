@@ -1,0 +1,17 @@
+global:
+  hosts:
+    iam: "iam.ericsson.com"
+  registry:
+    url: 
+    username: dummy
+    password: dummy
+  security:
+    tls:
+      enabled: false
+defaultUser:
+  username: dummy
+  password: dummy
+
+eric-oss-assurance-augmentation-db:
+  log:
+    streamingMethod: "stdout"

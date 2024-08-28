@@ -1,0 +1,94 @@
+# # Default values for eric-assurance-augmentation.
+# # This is a YAML-formatted file.
+# # Declare variables to be passed into your templates.
+#
+labels: {}
+annotations: {}
+nameOverride: ""
+
+global:
+  hosts:
+    iam: "iam.ericsson.com"
+  registry:
+    url: armdocker.rnd.ericsson.se
+    imagePullPolicy: "IfNotPresent"
+  pullSecret: "k8s-registry-secret"
+  networkPolicy:
+    enabled: true
+  serviceMesh:
+    enabled: false
+    ingress:
+      enabled: false
+  ingressClass: "oss_iccr"
+  log:
+    streamingMethod: "direct"
+  security:
+    tls:
+      enabled: false
+  logShipper:
+    deployment:
+      type: "sidecar"
+
+minReadySeconds: 0
+terminationGracePeriodSeconds: 30
+topologySpreadConstraints: []
+tolerations: []
+
+service:
+  port: 80
+
+apiGateway:
+  hostname: eric-eo-api-gateway
+
+ingress:
+  tls:
+    passthrough: false
+    secretName: iam-tls-secret
+
+gateway:
+  appName: service-mesh-ingress-gateway
+
+eric-oss-assurance-augmentation:
+  replicaCount: 1
+  database:
+    service: "eric-oss-assurance-augmentation-db"
+    port: "5432"
+    connectRetries: 9
+    schema: "aasdb"
+    credentials:
+      kubernetesSecretName: "eric-assurance-augmentation-db-secret"
+      keyForUserId: "pguserid"
+      keyForUserPw: "pgpasswd"
+
+eric-oss-assurance-augmentation-db:
+  enabled: true
+  postgresDatabase: aasdb
+  nameOverride: eric-oss-assurance-augmentation-db
+  credentials:
+    kubernetesSecretName: eric-assurance-augmentation-db-secret
+    keyForUserId: "pguserid"
+    keyForUserPw: "pgpasswd"
+  patroni:
+    logLevel: WARNING
+  service:
+    port: 5432
+    endpoints:
+      postgres:
+        tls:
+          enforced: optional
+      postgresExporter:
+        tls:
+          enforced: optional
+  highAvailability:
+    synchronousModeEnabled: false
+    replicaCount: 1
+  global:
+    security:
+      tls:
+        enabled: false
+
+stubs:
+  enabled: false
+
+eric-log-shipper:
+  enabled: true

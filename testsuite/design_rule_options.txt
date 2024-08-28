@@ -1,0 +1,7 @@
+-DhelmDesignRule.config.eric-oss-cardq-stub=skip
+-DhelmDesignRule.config.DR-D1120-013=skip
+-DhelmDesignRule.config.DR-D1123-113=skip
+-DhelmDesignRule.config.DR-D1126-010=skip
+-DhelmDesignRule.config.DR-D1121-021=skip
+-DhelmDesignRule.config.DR-D1121-032=skip
+-DhelmDesignRule.config.DR-D1123-134=disable
